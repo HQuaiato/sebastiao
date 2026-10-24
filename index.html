@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sebastião Bariga</title>
+<meta name="theme-color" content="#1b130d">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1b130d; --panel:#271c13; --panel2:#33251a; --line:#4a3624;
+  --ink:#efe3cf; --mute:#b8a68c; --gold:#d9a441; --fire:#e8743b; --cloud:#7fb2e5;
+  --good:#7cc47f; --bad:#e0655a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Crimson Pro",Georgia,serif;font-size:18px}
+body{padding-bottom:140px;background:radial-gradient(ellipse at top,#2c1f14 0,var(--bg) 60%)}
+h1,h2,h3,.cz{font-family:Cinzel,serif;letter-spacing:.03em}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+header{display:flex;gap:14px;align-items:center;padding:18px 0 10px}
+.portrait{width:84px;height:84px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:var(--panel2);flex:none;display:flex;align-items:center;justify-content:center;font-size:40px}
+header h1{margin:0;font-size:24px;color:var(--gold);line-height:1.1}
+header p{margin:4px 0 0;color:var(--mute);font-size:15px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:8px 0;border-bottom:1px solid var(--line)}
+nav button{flex:none}
+button{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer}
+button:active{transform:scale(.97)}
+button.on{background:var(--gold);color:#1b130d;border-color:var(--gold);font-weight:600}
+section{display:none;padding-top:12px}
+section.show{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.card h2{margin:0 0 10px;font-size:15px;color:var(--gold);text-transform:uppercase}
+.grid{display:grid;gap:8px}
+.g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+@media(min-width:640px){.g3m6{grid-template-columns:repeat(6,1fr)!important}}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center;cursor:pointer}
+.stat .n{font-family:Cinzel;font-size:12px;color:var(--mute)}
+.stat .m{font-size:26px;font-weight:600}
+.stat .s{font-size:13px;color:var(--mute)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:last-child{border-bottom:none}
+.row .v{font-weight:600;min-width:44px;text-align:right}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;border:1px solid var(--mute);margin-right:8px}
+.dot.p{background:var(--gold);border-color:var(--gold)}
+.tag{font-size:12px;padding:2px 7px;border-radius:999px;background:#3c2b1d;color:var(--mute);margin-left:6px}
+.tag.adv{background:#22402a;color:var(--good)}
+.big{display:flex;gap:8px}
+.big>div{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}
+.big .m{font-size:24px;font-weight:600}.big .n{font-size:12px;color:var(--mute);font-family:Cinzel}
+.hp{display:flex;align-items:baseline;justify-content:center;gap:6px;font-size:40px;font-weight:600}
+.hp small{font-size:18px;color:var(--mute)}
+.bar{height:10px;border-radius:6px;background:#3a2a1c;overflow:hidden;margin:6px 0 10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--bad),var(--good));transition:width .3s}
+input,textarea{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%}
+textarea{min-height:110px;resize:vertical}
+.hpctl{display:grid;grid-template-columns:1fr auto auto auto;gap:6px}
+.pips{display:flex;gap:6px;flex-wrap:wrap}
+.pip{width:28px;height:28px;border-radius:50%;border:2px solid var(--gold);background:var(--gold);cursor:pointer}
+.pip.used{background:transparent;opacity:.5}
+.res{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.res:last-child{border:none}
+.res b{display:block}.res span{color:var(--mute);font-size:14px}
+.atk{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
+.atk .t{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.atk .t b{font-size:18px}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.fire{border-color:var(--fire);color:var(--fire)} .cloud{border-color:var(--cloud);color:var(--cloud)}
+.giant.on{background:var(--fire);border-color:var(--fire);color:#1b130d}
+.mode{display:flex;gap:4px}
+.mode button{padding:6px 10px;font-size:15px}
+.dice{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.feat b{color:var(--gold)} .feat p{margin:4px 0 12px;color:var(--ink)}
+.lore p{line-height:1.5;margin:0 0 12px}
+.lore h3{color:var(--gold);font-size:15px;margin:16px 0 6px}
+#log{max-height:220px;overflow:auto;font-size:15px}
+#log div{padding:5px 0;border-bottom:1px solid var(--line);color:var(--mute)}
+#log div b{color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%) translateY(150%);width:min(92vw,520px);background:#120c08;border:2px solid var(--gold);border-radius:16px;padding:12px 16px;z-index:20;transition:transform .25s;box-shadow:0 10px 30px #000a}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast .l{color:var(--mute);font-size:15px}
+.toast .r{font-size:38px;font-weight:600;font-family:Cinzel;color:var(--gold);line-height:1.1}
+.toast .d{color:var(--mute);font-size:14px}
+.toast.crit{border-color:var(--good)} .toast.crit .r{color:var(--good)}
+.toast.fail{border-color:var(--bad)} .toast.fail .r{color:var(--bad)}
+.ds{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.ds label{display:flex;gap:4px;align-items:center;font-size:15px;color:var(--mute)}
+.ds input{width:22px;height:22px;accent-color:var(--gold)}
+.muted{color:var(--mute);font-size:15px}
+.coins{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.coins label{font-size:13px;color:var(--mute);text-align:center}
+.coins input{text-align:center;padding:6px 2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <img class="portrait" id="portrait" src="retrato.png" alt="" onerror="this.outerHTML='<div class=&quot;portrait&quot;>🐷</div>'">
+  <div>
+    <h1>Sebastião "Ugrak" Bariga</h1>
+    <p>Meio-orc · Guerreiro 4 (Cavaleiro Rúnico) · Cervejeiro de Porão · Neutro e Bom</p>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button data-t="combate" class="on">⚔️ Combate</button>
+  <button data-t="pericias">🎲 Testes</button>
+  <button data-t="traços">📜 Habilidades</button>
+  <button data-t="mochila">🎒 Mochila</button>
+  <button data-t="lore">🍺 Lore</button>
+</nav>
+
+<!-- COMBATE -->
+<section id="combate" class="show">
+  <div class="card">
+    <h2>Pontos de vida</h2>
+    <div class="hp"><span id="hpCur">40</span><small>/ 40</small><small id="hpTemp"></small></div>
+    <div class="bar"><i id="hpBar" style="width:100%"></i></div>
+    <div class="hpctl">
+      <input id="hpIn" type="number" inputmode="numeric" placeholder="valor">
+      <button id="bDmg" style="color:var(--bad)">Dano</button>
+      <button id="bHeal" style="color:var(--good)">Cura</button>
+      <button id="bTemp">Temp</button>
+    </div>
+    <div class="ds" style="margin-top:12px">
+      <span class="muted">Teste contra morte:</span>
+      <label>✔ <input type="checkbox" class="dsS"><input type="checkbox" class="dsS"><input type="checkbox" class="dsS"></label>
+      <label>✖ <input type="checkbox" class="dsF"><input type="checkbox" class="dsF"><input type="checkbox" class="dsF"></label>
+      <button id="bDeath">Rolar</button>
+    </div>
+  </div>
+
+  <div class="big" style="margin-bottom:12px">
+    <div><div class="n">CA</div><div class="m" id="acV">19</div></div>
+    <div style="cursor:pointer" id="bInit"><div class="n">Iniciativa</div><div class="m">+0</div></div>
+    <div><div class="n">Desloc.</div><div class="m">9 m</div></div>
+    <div><div class="n">Proficiência</div><div class="m">+2</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Rolagem</h2>
+    <div class="mode" id="mode">
+      <button data-m="0" class="on">Normal</button>
+      <button data-m="1">Vantagem</button>
+      <button data-m="-1">Desvantagem</button>
+    </div>
+    <p class="muted" style="margin:8px 0 0">Vale para todos os d20 até você trocar.</p>
+  </div>
+
+  <div class="card">
+    <h2>Poder do Gigante</h2>
+    <button id="bGiant" class="giant" style="width:100%">Ativar (ação bônus, 1 min)</button>
+    <p class="muted" style="margin:8px 0 0">Ativo: você fica Grande, ganha vantagem em testes e salvaguardas de FOR (aplicada automaticamente) e +1d6 de dano uma vez por turno.</p>
+  </div>
+
+  <div class="card">
+    <h2>Ataques</h2>
+    <div id="attacks"></div>
+    <label class="muted" style="display:flex;gap:8px;align-items:center;margin-top:4px">
+      <input type="checkbox" id="gmTurn" style="width:20px;height:20px;accent-color:var(--fire)"> somar +1d6 do Gigante no próximo dano
+    </label>
+  </div>
+
+  <div class="card">
+    <h2>Runas · CD 13</h2>
+    <div class="btns" style="margin-top:0">
+      <button class="fire" id="bFire">🔥 Runa de Fogo</button>
+      <button class="fire" id="bFireTick">🔥 Dano contínuo 2d6</button>
+      <button class="cloud" id="bCloud">☁️ Runa de Nuvem</button>
+    </div>
+    <p class="muted" style="margin:8px 0 0">Fogo: ao acertar, +2d6 de fogo e o alvo faz salvaguarda de FOR (CD 13) ou fica impedido. Ele toma 2d6 no início de cada turno dele e repete a salvaguarda no fim. Nuvem: reação, desvia para outra criatura a até 9 m um ataque que acertaria um aliado.</p>
+  </div>
+
+  <div class="card">
+    <h2>Recursos</h2>
+    <div id="resources"></div>
+    <div class="btns">
+      <button id="bShort">☕ Descanso curto</button>
+      <button id="bLong">🛏️ Descanso longo</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTES -->
+<section id="pericias">
+  <div class="card">
+    <h2>Atributos <span class="muted" style="text-transform:none">· toque para testar</span></h2>
+    <div class="grid g3 g3m6" id="abil"></div>
+  </div>
+  <div class="card"><h2>Salvaguardas</h2><div id="saves"></div></div>
+  <div class="card"><h2>Perícias</h2><div id="skills"></div>
+    <p class="muted" style="margin:10px 0 0">Percepção passiva: <b style="color:var(--ink)">13</b></p></div>
+  <div class="card"><h2>Ferramentas</h2><div id="tools"></div>
+    <p class="muted" style="margin:10px 0 0">A Runa de Fogo dobra a proficiência com ferramentas (+4). O mestre diz qual atributo usar.</p></div>
+  <div class="card"><h2>Dados livres</h2>
+    <div class="dice" id="dice"></div>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <input id="expr" placeholder="ex: 2d6+3">
+      <button id="bExpr">Rolar</button>
+    </div>
+  </div>
+  <div class="card"><h2>Histórico</h2><div id="log"></div></div>
+</section>
+
+<!-- HABILIDADES -->
+<section id="traços">
+  <div class="card feat">
+    <h2>Meio-orc</h2>
+    <b>Visão no Escuro</b><p>Enxerga no escuro até 18 m, em tons de cinza.</p>
+    <b>Ameaçador</b><p>Proficiência em Intimidação.</p>
+    <b>Resistência Implacável</b><p>Uma vez por descanso longo, quando cairia a 0 PV sem morrer na hora, fica com 1 PV.</p>
+    <b>Ataques Selvagens</b><p>Em um acerto crítico com arma corpo a corpo, rola um dado de dano da arma a mais. O app já soma.</p>
+  </div>
+  <div class="card feat">
+    <h2>Guerreiro</h2>
+    <b>Estilo de Luta: Defesa</b><p>+1 de CA usando armadura (já somado no 19).</p>
+    <b>Retomar o Fôlego</b><p>Ação bônus: recupera 1d10+4 PV. Uma vez por descanso curto ou longo.</p>
+    <b>Surto de Ação</b><p>Uma ação extra no seu turno. Uma vez por descanso curto ou longo.</p>
+    <b>Aumento de Atributo (nível 4)</b><p>+1 FOR, +1 CAR.</p>
+  </div>
+  <div class="card feat">
+    <h2>Cavaleiro Rúnico</h2>
+    <b>Entalhador de Runas</b><p>Conhece 2 runas, gravadas na tampa do barril da mãe. Cada uma pode ser invocada uma vez por descanso curto ou longo. CD = 8 + proficiência + CON = 13.</p>
+    <b style="color:var(--fire)">Runa de Fogo</b><p>Passivo: dobra a proficiência em testes com ferramentas. Ativo: ao acertar com arma, +2d6 de fogo; o alvo faz salvaguarda de FOR ou fica impedido por 1 minuto, tomando 2d6 de fogo no início de cada turno dele e repetindo a salvaguarda no fim.</p>
+    <b style="color:var(--cloud)">Runa de Nuvem</b><p>Passivo: vantagem em Prestidigitação e Enganação. Ativo (reação): quando uma criatura que você vê a até 9 m é atingida, você escolhe outra criatura a até 9 m de você (não o atacante); o ataque passa a mirar ela, com a mesma rolagem.</p>
+    <b>Poder do Gigante</b><p>Ação bônus, por 1 minuto: fica Grande (se houver espaço), vantagem em testes e salvaguardas de FOR, +1d6 de dano uma vez por turno com ataque de arma. 2 usos por descanso longo.</p>
+  </div>
+  <div class="card">
+    <h2>Proficiências e idiomas</h2>
+    <p style="margin:0">Armaduras: todas e escudos.<br>Armas: simples e marciais.<br>Ferramentas: suprimentos de cervejeiro, kit de jogos (dados), ferramentas de ferreiro (tanoeiro).<br>Idiomas: Comum, Humana.</p>
+  </div>
+  <div class="card">
+    <h2>Personalidade</h2>
+    <p style="margin:0 0 8px"><b>Traços:</b> Fala pouco, mas cheira cada caneca antes de beber. Pede desculpas para quem acabou de derrubar.</p>
+    <p style="margin:0 0 8px"><b>Ideal:</b> "Ninguém deveria ficar sozinho nas cinzas."</p>
+    <p style="margin:0 0 8px"><b>Vínculos:</b> Torresmin, e a cerveja de bergamota da mãe.</p>
+    <p style="margin:0"><b>Defeitos:</b> Obedece a quem o criou mais do que deveria. Desmonta diante de qualquer pedido de misericórdia, mesmo quando é armadilha.</p>
+  </div>
+</section>
+
+<!-- MOCHILA -->
+<section id="mochila">
+  <div class="card">
+    <h2>Dinheiro</h2>
+    <div class="coins">
+      <label>PC<input data-c="cp" type="number" inputmode="numeric"></label>
+      <label>PP<input data-c="sp" type="number" inputmode="numeric"></label>
+      <label>PE<input data-c="ep" type="number" inputmode="numeric"></label>
+      <label>PO<input data-c="gp" type="number" inputmode="numeric"></label>
+      <label>PL<input data-c="pp" type="number" inputmode="numeric"></label>
+    </div>
+  </div>
+  <div class="card"><h2>Equipamento</h2><textarea id="equip"></textarea></div>
+  <div class="card"><h2>Tesouro</h2><textarea id="treasure" style="min-height:70px"></textarea></div>
+  <div class="card"><h2>Anotações da sessão</h2><textarea id="notes" placeholder="NPCs, pistas, receitas de cerveja..." style="min-height:180px"></textarea></div>
+  <p class="muted">Tudo nesta aba e o estado do combate ficam salvos neste aparelho e neste navegador.</p>
+</section>
+
+<!-- LORE -->
+<section id="lore">
+  <div class="card lore">
+    <h2>Aparência</h2>
+    <p>32 anos · 1,95 m · 150 kg · olhos castanhos · pele verde-acinzentada · cabelo castanho-escuro e barba trançada com um anel de ferro. Barrigão, braços enormes, cicatrizes, presas pequenas e nariz quebrado, mas olhos gentis. Cota de malha remendada sob um avental de cervejeiro manchado, barrilzinho nas costas e Torresmin no ombro.</p>
+  </div>
+  <div class="card lore">
+    <h2>História</h2>
+    <p>Sebastião mora escondido nos fundos da Taverna do Gato e Veado, no Lugarejo Desimportante. Ninguém do lugarejo sabe que ele existe, e quem sabe finge que não sabe. Ugrak era o nome que a mãe usava; ele mal lembra disso.</p>
+    <h3>A mãe e as runas</h3>
+    <p>A mãe era humana, de uma família de tanoeiros do interior que entalhava nas tampas dos barris runas antigas, de um tempo em que gigantes andavam por aquelas terras. Ninguém as lia como língua: eram "marcas da casa", passadas de mãe para filha, que mantinham a cerveja boa, o fogo da brassagem firme e o barril inteiro. Do pai, só sabe que era orc.</p>
+    <p>A aldeia foi destruída na Guerra de Quincas. Oficialmente, foi só mais uma vila no caminho, mas pode ser que alguém tenha ido até lá atrás das runas. Dele, sobrou um gosto: uma cerveja clara, amarga e cítrica, de bergamota, selada com uma runa, que a mãe deixava ele provar na ponta do dedo. E sobrou a tampa do barril dela, que hoje é o escudo dele.</p>
+    <h3>Os fundos da taverna</h3>
+    <p>Seu Lauro e Dona Cida, donos da taverna, o criaram escondido no depósito. Do jeito torto deles, o amavam, mas repetiam sempre: "o mundo não vai ter pena de ti, então tu tens que ser forte". Nas noites de aposta, o porão virava rinha, e o "monstro do Gato e Veado" quase nunca perdia. Ele não gostava de brigar, mas gostava de ser útil.</p>
+    <h3>A noite do Torresmin</h3>
+    <p>Trouxeram um leitãozinho malhado para ser o assado da vitória, e ele se recusou a entregá-lo: foi a primeira vez que disse não ao casal. Quando um apostador partiu para cima do porquinho, a tampa brilhou, as runas acenderam no escudo e nos braços, e ele cresceu. Ninguém falou mais disso. O leitão virou o Torresmin, e as lutas pararam.</p>
+    <h3>Hoje</h3>
+    <p>Ele vive fazendo cerveja, obcecado em achar a "berga" perfeita. A bergamota boa só cresce do outro lado da fronteira, no reino rival, e quase sumiu do comércio. E ele desconfia que falta mais do que a receita: falta a runa certa. Grande e assustador, desmonta diante de criança chorando, bicho machucado ou pedido de misericórdia.</p>
+  </div>
+  <div class="card lore">
+    <h2>Aliados</h2>
+    <p>Seu Lauro e Dona Cida (Taverna do Gato e Veado) · Torresmin, o porquinho de cachecol.</p>
+  </div>
+</section>
+</div>
+
+<div class="toast" id="toast"><div class="l" id="tL"></div><div class="r" id="tR"></div><div class="d" id="tD"></div></div>
+
+<script>
+const PB=2;
+const AB={FOR:{n:'Força',s:18},DES:{n:'Destreza',s:10},CON:{n:'Constituição',s:16},INT:{n:'Inteligência',s:8},SAB:{n:'Sabedoria',s:12},CAR:{n:'Carisma',s:12}};
+const mod=a=>Math.floor((AB[a].s-10)/2);
+const sg=n=>(n>=0?'+':'')+n;
+const SAVES={FOR:1,CON:1};
+const SKILLS=[['Acrobacia','DES'],['Arcanismo','INT'],['Atletismo','FOR',1],['Atuação','CAR'],['Enganação','CAR',0,'nuvem'],['Furtividade','DES',0,'','des'],['História','INT'],['Intimidação','CAR',1],['Intuição','SAB',1],['Investigação','INT'],['Lidar com Animais','SAB',1],['Medicina','SAB'],['Natureza','INT'],['Percepção','SAB',1],['Persuasão','CAR'],['Prestidigitação','DES',0,'nuvem'],['Religião','INT'],['Sobrevivência','SAB']];
+const WEAPONS=[{n:'Martelo de Guerra',die:8,cnt:1,type:'contundente',note:'corpo a corpo'},{n:'Machadinha',die:6,cnt:1,type:'cortante',note:'corpo a corpo ou arremesso 6/18 m'}];
+const RES=[
+ {id:'sw',n:'Retomar o Fôlego',d:'ação bônus · 1d10+4 PV',max:1,r:'short'},
+ {id:'as',n:'Surto de Ação',d:'ação extra',max:1,r:'short'},
+ {id:'gm',n:'Poder do Gigante',d:'ação bônus · 1 min',max:2,r:'long'},
+ {id:'fr',n:'Runa de Fogo',d:'ao acertar',max:1,r:'short'},
+ {id:'cr',n:'Runa de Nuvem',d:'reação',max:1,r:'short'},
+ {id:'re',n:'Resistência Implacável',d:'cair a 1 PV em vez de 0',max:1,r:'long'},
+ {id:'hd',n:'Dados de Vida (d10)',d:'no descanso curto · 1d10+3 cada',max:4,r:'hd'}
+];
+const HPMAX=40;
+const KEY='sebastiao-bariga-v1';
+let S={hp:40,temp:0,used:{},mode:0,giant:false,ds:[0,0,0,0,0,0],coins:{cp:0,sp:0,ep:0,gp:0,pp:0},
+ equip:'Cota de malha, escudo (tampa do barril da mãe), martelo de guerra, 2 machadinhas, pacote de aventureiro, suprimentos de cervejeiro, um barril pequeno.',
+ treasure:'Tampa de barril da mãe - escudo com runas',notes:''};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s)S=Object.assign(S,s);}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+
+// dice
+const d=n=>1+Math.floor(Math.random()*n);
+function rollN(c,n){const a=[];for(let i=0;i<c;i++)a.push(d(n));return a}
+const LOG=[];
+function toast(label,res,det,cls){
+ const t=$('toast');t.className='toast show '+(cls||'');$('tL').textContent=label;$('tR').textContent=res;$('tD').textContent=det||'';
+ clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),4500);
+ LOG.unshift(`<b>${label}: ${res}</b> ${det?'· '+det:''}`);LOG.length=Math.min(LOG.length,40);$('log').innerHTML=LOG.map(x=>'<div>'+x+'</div>').join('');
+}
+function d20(label,bonus,forceAdv){
+ let m=S.mode; if(forceAdv) m=m===-1?0:1;
+ const a=d(20),b=d(20); let r=a,txt='d20: '+a;
+ if(m===1){r=Math.max(a,b);txt=`vantagem: ${a} e ${b}`}
+ if(m===-1){r=Math.min(a,b);txt=`desvantagem: ${a} e ${b}`}
+ const tot=r+bonus;
+ toast(label,tot,`${txt} ${sg(bonus)}${r===20?' · 20 natural!':r===1?' · 1 natural':''}`,r===20?'crit':r===1?'fail':'');
+ return {nat:r,tot};
+}
+
+// tabs
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+ document.querySelectorAll('section').forEach(s=>s.classList.toggle('show',s.id===b.dataset.t));
+ window.scrollTo({top:0});
+});
+// mode
+function renderMode(){document.querySelectorAll('#mode button').forEach(b=>b.classList.toggle('on',+b.dataset.m===S.mode))}
+document.querySelectorAll('#mode button').forEach(b=>b.onclick=()=>{S.mode=+b.dataset.m;save();renderMode()});
+
+// abilities / saves / skills
+$('abil').innerHTML=Object.keys(AB).map(k=>`<div class="stat" data-a="${k}"><div class="n">${k}</div><div class="m">${sg(mod(k))}</div><div class="s">${AB[k].s}</div></div>`).join('');
+document.querySelectorAll('#abil .stat').forEach(e=>e.onclick=()=>{const k=e.dataset.a;d20('Teste de '+AB[k].n,mod(k),k==='FOR'&&S.giant)});
+$('saves').innerHTML=Object.keys(AB).map(k=>{const v=mod(k)+(SAVES[k]?PB:0);return `<div class="row" data-a="${k}"><span><span class="dot ${SAVES[k]?'p':''}"></span>${AB[k].n}${k==='FOR'?'<span class="tag adv giantTag" style="display:none">vant.</span>':''}</span><span class="v">${sg(v)}</span></div>`}).join('');
+document.querySelectorAll('#saves .row').forEach(e=>e.onclick=()=>{const k=e.dataset.a;d20('Salvaguarda de '+AB[k].n,mod(k)+(SAVES[k]?PB:0),k==='FOR'&&S.giant)});
+$('skills').innerHTML=SKILLS.map((s,i)=>{const v=mod(s[1])+(s[2]?PB:0);return `<div class="row" data-i="${i}"><span><span class="dot ${s[2]?'p':''}"></span>${s[0]} <span class="tag">${s[1]}</span>${s[3]?'<span class="tag adv">vant. ☁️</span>':''}${s[4]?'<span class="tag">desv. armadura</span>':''}${s[1]==='FOR'?'<span class="tag adv giantTag" style="display:none">vant.</span>':''}</span><span class="v">${sg(v)}</span></div>`}).join('');
+document.querySelectorAll('#skills .row').forEach(e=>e.onclick=()=>{const s=SKILLS[+e.dataset.i];
+ let m=S.mode;const adv=!!s[3]||(s[1]==='FOR'&&S.giant);const dis=!!s[4];
+ const keep=S.mode; if(adv&&!dis)S.mode=m===-1?0:1; else if(dis&&!adv)S.mode=m===1?0:-1;
+ d20(s[0],mod(s[1])+(s[2]?PB:0)); S.mode=keep;});
+const TOOLS=[['Suprimentos de cervejeiro'],['Ferramentas de tanoeiro (ferreiro)'],['Kit de jogos (dados)']];
+$('tools').innerHTML=TOOLS.map((t,i)=>`<div class="row" style="cursor:default"><span>${t[0]}</span><span class="btns" style="margin:0"><button data-t="${i}" data-a="INT">INT ${sg(mod('INT')+PB*2)}</button><button data-t="${i}" data-a="SAB">SAB ${sg(mod('SAB')+PB*2)}</button><button data-t="${i}" data-a="DES">DES ${sg(mod('DES')+PB*2)}</button></span></div>`).join('');
+document.querySelectorAll('#tools button').forEach(b=>b.onclick=()=>d20(TOOLS[+b.dataset.t][0]+' ('+b.dataset.a+')',mod(b.dataset.a)+PB*2));
+$('bInit').onclick=()=>d20('Iniciativa',mod('DES'));
+
+// free dice
+$('dice').innerHTML=[4,6,8,10,12,20,100].map(n=>`<button data-n="${n}">d${n}</button>`).join('')+'<button id="bClear">limpar</button>';
+document.querySelectorAll('#dice button[data-n]').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;const r=d(n);toast('d'+n,r,'',n===20&&r===20?'crit':n===20&&r===1?'fail':'')});
+$('bClear').onclick=()=>{LOG.length=0;$('log').innerHTML=''};
+function rollExpr(ex){
+ const t=ex.replace(/\s/g,'').toLowerCase().match(/[+-]?[^+-]+/g);if(!t)return null;
+ let tot=0,parts=[];
+ for(const p of t){const sgn=p[0]==='-'?-1:1;const q=p.replace(/^[+-]/,'');const m=q.match(/^(\d*)d(\d+)$/);
+  if(m){const rs=rollN(+(m[1]||1),+m[2]);tot+=sgn*rs.reduce((a,b)=>a+b,0);parts.push((sgn<0?'-':'')+'['+rs.join(',')+']')}
+  else if(/^\d+$/.test(q)){tot+=sgn*+q;parts.push((sgn<0?'-':'+')+q)} else return null;}
+ return {tot,det:parts.join(' ')};
+}
+$('bExpr').onclick=()=>{const r=rollExpr($('expr').value);if(r)toast($('expr').value,r.tot,r.det);else toast('Expressão inválida','—','use algo como 2d6+3')};
+
+// attacks
+const ATK=mod('FOR')+PB, DMG=mod('FOR');
+$('attacks').innerHTML=WEAPONS.map((w,i)=>`<div class="atk"><div class="t"><b>${w.n}</b><span class="muted">${sg(ATK)} · ${w.cnt}d${w.die}${sg(DMG)} ${w.type}</span></div><div class="muted" style="font-size:14px">${w.note}</div><div class="btns"><button data-w="${i}" data-k="hit">🎯 Ataque</button><button data-w="${i}" data-k="dmg">💥 Dano</button><button data-w="${i}" data-k="crit">⭐ Dano crítico</button></div></div>`).join('');
+let lastCrit=false;
+document.querySelectorAll('#attacks button').forEach(b=>b.onclick=()=>{
+ const w=WEAPONS[+b.dataset.w];
+ if(b.dataset.k==='hit'){const r=d20('Ataque · '+w.n,ATK);lastCrit=r.nat===20;if(lastCrit)toast('Ataque · '+w.n,r.tot,'CRÍTICO! Toque em "Dano crítico"','crit');return}
+ const crit=b.dataset.k==='crit';
+ let c=w.cnt*(crit?2:1)+(crit?1:0); // Ataques Selvagens
+ const rs=rollN(c,w.die);let tot=rs.reduce((a,b)=>a+b,0)+DMG;let det=`[${rs.join(',')}]${sg(DMG)}`;
+ if($('gmTurn').checked){const g=rollN(crit?2:1,6);tot+=g.reduce((a,b)=>a+b,0);det+=` + gigante [${g.join(',')}]`;$('gmTurn').checked=false}
+ toast((crit?'Crítico · ':'Dano · ')+w.n,tot,det+(crit?' · inclui Ataques Selvagens':''),crit?'crit':'');
+});
+
+// resources
+function renderRes(){
+ $('resources').innerHTML=RES.map(r=>{const u=S.used[r.id]||0;let pips='';for(let i=0;i<r.max;i++)pips+=`<span class="pip ${i<u?'used':''}" data-r="${r.id}" data-i="${i}"></span>`;
+  return `<div class="res"><div><b>${r.n}</b><span>${r.d} · ${r.r==='long'?'descanso longo':r.r==='hd'?'metade volta no longo':'descanso curto'}</span></div><div class="pips">${pips}</div></div>`}).join('');
+ document.querySelectorAll('.pip').forEach(p=>p.onclick=()=>{const id=p.dataset.r,i=+p.dataset.i;const u=S.used[id]||0;S.used[id]=i<u?i:i+1;
+  const r=RES.find(x=>x.id===id);
+  if(id==='sw'&&S.used[id]>u){const x=d(10)+4;heal(x);toast('Retomar o Fôlego','+'+x+' PV','1d10+4')}
+  if(id==='hd'&&S.used[id]>u){const x=Math.max(1,d(10)+3);heal(x);toast('Dado de Vida','+'+x+' PV','1d10+3')}
+  save();renderRes();});
+}
+function use(id){const r=RES.find(x=>x.id===id);const u=S.used[id]||0;if(u>=r.max){toast(r.n,'Sem usos','espere o descanso','fail');return false}S.used[id]=u+1;save();renderRes();return true}
+
+$('bFire').onclick=()=>{if(!use('fr'))return;const rs=rollN(2,6);toast('🔥 Runa de Fogo','+'+rs.reduce((a,b)=>a+b,0)+' fogo',`[${rs.join(',')}] · alvo: salvaguarda de FOR CD 13 ou impedido`)};
+$('bFireTick').onclick=()=>{const rs=rollN(2,6);toast('🔥 Fogo contínuo',rs.reduce((a,b)=>a+b,0),`[${rs.join(',')}] · alvo repete salvaguarda CD 13 no fim do turno`)};
+$('bCloud').onclick=()=>{if(!use('cr'))return;toast('☁️ Runa de Nuvem','Desviado!','o ataque vai para outra criatura a até 9 m, mesma rolagem')};
+function renderGiant(){$('bGiant').classList.toggle('on',S.giant);$('bGiant').textContent=S.giant?'⛰️ GIGANTE ATIVO (toque para encerrar)':'Ativar (ação bônus, 1 min)';
+ document.querySelectorAll('.giantTag').forEach(t=>t.style.display=S.giant?'inline':'none');if(S.giant)$('gmTurn').checked=true}
+$('bGiant').onclick=()=>{if(S.giant){S.giant=false}else{if(!use('gm'))return;S.giant=true;toast('⛰️ Poder do Gigante','Ativo!','Grande · vantagem em FOR · +1d6 por turno')}save();renderGiant()};
+
+// HP
+function renderHP(){$('hpCur').textContent=S.hp;$('hpTemp').textContent=S.temp?`+${S.temp} temp`:'';$('hpBar').style.width=Math.max(0,S.hp/HPMAX*100)+'%'}
+function heal(x){S.hp=Math.min(HPMAX,S.hp+x);if(S.hp>0)S.ds=[0,0,0,0,0,0];save();renderHP();renderDS()}
+$('bHeal').onclick=()=>{const v=+$('hpIn').value;if(v>0){heal(v);$('hpIn').value=''}};
+$('bTemp').onclick=()=>{const v=+$('hpIn').value;if(v>=0){S.temp=Math.max(S.temp,v);$('hpIn').value='';save();renderHP()}};
+$('bDmg').onclick=()=>{let v=+$('hpIn').value;if(!(v>0))return;$('hpIn').value='';
+ const t=Math.min(S.temp,v);S.temp-=t;v-=t;S.hp-=v;
+ if(S.hp<=0){ if((S.used.re||0)<1 && S.hp>-HPMAX && confirm('Usar Resistência Implacável e ficar com 1 PV?')){S.used.re=1;S.hp=1;toast('Resistência Implacável','1 PV','ainda de pé!','crit')} else {S.hp=0;toast('Caiu!','0 PV','faça testes contra morte','fail')}}
+ save();renderHP();renderRes()};
+function renderDS(){document.querySelectorAll('.dsS').forEach((c,i)=>c.checked=!!S.ds[i]);document.querySelectorAll('.dsF').forEach((c,i)=>c.checked=!!S.ds[i+3])}
+document.querySelectorAll('.dsS').forEach((c,i)=>c.onchange=()=>{S.ds[i]=c.checked?1:0;save()});
+document.querySelectorAll('.dsF').forEach((c,i)=>c.onchange=()=>{S.ds[i+3]=c.checked?1:0;save()});
+$('bDeath').onclick=()=>{const r=d(20);
+ if(r===20){heal(1);toast('Teste contra morte','20!','volta com 1 PV','crit');return}
+ const mark=(from,n)=>{for(let k=0;k<n;k++){const j=S.ds.slice(from,from+3).indexOf(0);if(j>=0)S.ds[from+j]=1}};
+ if(r===1){mark(3,2);toast('Teste contra morte',r,'duas falhas','fail')} else if(r>=10){mark(0,1);toast('Teste contra morte',r,'sucesso')} else {mark(3,1);toast('Teste contra morte',r,'falha','fail')}
+ save();renderDS()};
+
+// rests
+$('bShort').onclick=()=>{RES.filter(r=>r.r==='short').forEach(r=>S.used[r.id]=0);save();renderRes();toast('Descanso curto','Feito','runas, Fôlego e Surto recarregados · gaste Dados de Vida para curar')};
+$('bLong').onclick=()=>{if(!confirm('Fazer descanso longo?'))return;
+ const hdUsed=S.used.hd||0;RES.forEach(r=>{if(r.r!=='hd')S.used[r.id]=0});S.used.hd=Math.max(0,hdUsed-2);
+ S.hp=HPMAX;S.temp=0;S.giant=false;S.ds=[0,0,0,0,0,0];save();renderAll();toast('Descanso longo','PV cheio','tudo recarregado · recupera 2 Dados de Vida')};
+
+// backpack
+['equip','treasure','notes'].forEach(k=>{$(k).value=S[k]||'';$(k).oninput=()=>{S[k]=$(k).value;save()}});
+document.querySelectorAll('[data-c]').forEach(i=>{i.value=S.coins[i.dataset.c]||0;i.oninput=()=>{S.coins[i.dataset.c]=+i.value||0;save()}});
+
+function renderAll(){renderHP();renderRes();renderGiant();renderMode();renderDS()}
+renderAll();
+</script>
+</body>
+</html>
