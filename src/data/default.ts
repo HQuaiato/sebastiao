@@ -27,6 +27,7 @@ export interface Sheet {
   brews: Brew[];
   pet: { hunger: number; joy: number; ts: number; snacks: number };
   game: { target: number[] | null; revealed: number[]; hint: boolean; tries: number; solved: boolean };
+  auth: { hash: string };
   state: { hp: number; temp: number; used: Record<string, number>; giant: boolean; ds: number[]; mode: number; hdUsed: number };
 }
 
@@ -174,6 +175,9 @@ export const DEFAULT: Sheet = {
       "ts": 0
     }
   ],
+  "auth": {
+    "hash": ""
+  },
   "state": {
     "hp": 40,
     "temp": 0,

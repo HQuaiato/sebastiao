@@ -5,7 +5,9 @@ import { Checks } from './tabs/Checks';
 import { Edit } from './tabs/Edit';
 import { Bag, Info } from './tabs/Info';
 import { Play } from './tabs/Play';
-import { useSheet } from './lib/store';
+import { getRole, useSheet } from './lib/store';
+import { Login } from './components/Login';
+import { Visitor } from './tabs/Visitor';
 
 const LS_TAB = 'sebastiao-tab2';
 const firstTab = (): Tab => {
@@ -17,6 +19,13 @@ const firstTab = (): Tab => {
 };
 
 export default function App() {
+  const role = getRole();
+  if (role === 'visitor') return <><Visitor /><RollOverlay /></>;
+  if (role !== 'player') return <Login />;
+  return <Player />;
+}
+
+function Player() {
   const [tab, setTab] = useState<Tab>(firstTab);
   const D = useSheet();
   useEffect(() => { try { localStorage.setItem(LS_TAB, tab); } catch { /* ignore */ } }, [tab]);

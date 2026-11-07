@@ -310,3 +310,15 @@ details.sec > summary small { font-family: 'Crimson Pro'; text-transform: none; 
 nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; overflow: visible; }
 nav button { padding: 7px 2px; font-size: 15px; white-space: nowrap; }
 @media (max-width: 360px) { nav button { font-size: 13px; } }
+/* login */
+.login { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px 16px; }
+.login-card { width: min(100%, 400px); text-align: center; background: linear-gradient(180deg, #2a1e14, var(--panel)); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; box-shadow: 0 0 40px rgba(236, 122, 60, .15); }
+.login-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; object-position: 50% 12%; border: 2px solid var(--gold); box-shadow: 0 0 24px rgba(236, 122, 60, .35); }
+.login-card h1 { color: var(--gold); font-size: 21px; margin: 12px 0 2px; }
+.login-btns { display: grid; gap: 10px; margin-top: 18px; }
+.big-btn { padding: 13px; font-size: 18px; }
+.center { text-align: center; }
+.giant-t { color: var(--fire); text-align: center; margin: 0; font-family: Cinzel; font-size: 15px; }
+.line.static { cursor: default; background: var(--panel2); border: 1px solid var(--line); }
+div.skill { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; }
+.hpcard .hpnum { margin-bottom: 4px; }

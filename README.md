@@ -16,6 +16,11 @@ Ficha interativa feita em React + TypeScript + Vite, publicada no GitHub Pages p
 - **📖 Ficha:** habilidades, personalidade e história
 - **✏️ Editar:** muda qualquer número ou texto; o resto se recalcula sozinho
 
+## Jogador e visitante
+
+- **Jogador:** entra com senha (criada no primeiro acesso) e vê e edita tudo.
+- **Visitante:** link [`?visitante`](https://hquaiato.github.io/sebastiao/?visitante). Vê vida, CA, atributos, perícias, ataques e usos dos poderes, atualizados a cada 15 s. Não vê habilidades, história, personalidade, itens nem anotações, e não edita nada.
+
 ## Salvar em qualquer aparelho
 
 A ficha salva sozinha no aparelho. Para ficar igual em todos, abra **✏️ Editar** e cole um token do GitHub (fine-grained, só para o repositório `sebastiao`, com **Contents: Read and write**). Aí cada mudança é gravada no `ficha.json` deste repositório.

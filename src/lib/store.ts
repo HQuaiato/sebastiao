@@ -40,7 +40,22 @@ function loadLocal(): Sheet | null {
   try { return fromAny(JSON.parse(raw)); } catch { return null; }
 }
 
-let D: Sheet = loadLocal() ?? clone(DEFAULT);
+const LS_ROLE = 'sebastiao-role';
+export type Role = 'player' | 'visitor' | null;
+const urlVisitor = typeof location !== 'undefined' && /[?&]visitante\b/.test(location.search);
+export const getRole = (): Role => (urlVisitor ? 'visitor' : ((lsGet(LS_ROLE) as Role) || null));
+export function setRole(r: Role) {
+  lsSet(LS_ROLE, r);
+  if (urlVisitor && r !== 'visitor') { location.href = location.pathname; return; }
+  location.reload();
+}
+/** Visitante só lê: nada é salvo no aparelho nem na nuvem. */
+const readonly = getRole() === 'visitor';
+export const isReadonly = () => readonly;
+
+let D: Sheet = readonly ? clone(DEFAULT) : loadLocal() ?? clone(DEFAULT);
+let loaded = !readonly;
+export const isLoaded = () => loaded;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 const subscribe = (l: () => void) => { listeners.add(l); return () => listeners.delete(l); };
@@ -49,6 +64,7 @@ export const getSheet = () => D;
 export const useSheet = () => useSyncExternalStore(subscribe, () => D);
 
 export function update(fn: (d: Sheet) => void) {
+  if (readonly) return;
   const n = clone(D);
   fn(n);
   n.updatedAt = Date.now();
@@ -58,6 +74,7 @@ export function update(fn: (d: Sheet) => void) {
   scheduleCloud();
 }
 export function replace(n: Sheet, touch = true) {
+  if (readonly) return;
   D = n;
   if (touch) D.updatedAt = Date.now();
   lsSet(LS, JSON.stringify(D));
@@ -150,7 +167,21 @@ export async function pullIfNewer() {
   }
 }
 
+async function visitorPull() {
+  try {
+    const r = await cloudGet();
+    if (r) { D = r; loaded = true; setSync('👀 ao vivo', 'ok'); }
+    else setSync('A ficha ainda não foi enviada para a nuvem pelo jogador.', 'err');
+  } catch { setSync(loaded ? '📴 sem conexão' : 'Sem conexão com o GitHub. Tente de novo em instantes.', 'warn'); }
+  emit();
+}
+
 export function startSync() {
+  if (readonly) {
+    visitorPull();
+    setInterval(() => { if (document.visibilityState === 'visible') visitorPull(); }, 15000);
+    return;
+  }
   lsSet(LS, JSON.stringify(D));
   pullIfNewer();
   document.addEventListener('visibilitychange', () => {
