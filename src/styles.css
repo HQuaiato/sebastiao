@@ -322,3 +322,15 @@ nav button { padding: 7px 2px; font-size: 15px; white-space: nowrap; }
 .line.static { cursor: default; background: var(--panel2); border: 1px solid var(--line); }
 div.skill { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; }
 .hpcard .hpnum { margin-bottom: 4px; }
+/* info dos poderes */
+.info-btn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; margin-left: 6px; border-radius: 50%; font-family: Georgia, serif; font-style: italic; font-weight: 700; font-size: 14px; color: var(--gold); border-color: var(--gold); vertical-align: 2px; }
+.modal { position: fixed; inset: 0; z-index: 55; background: rgba(8, 5, 3, .78); display: flex; align-items: flex-end; justify-content: center; padding: 12px; animation: fadein .2s; }
+@media (min-width: 640px) { .modal { align-items: center; } }
+.modal-card { width: min(100%, 560px); max-height: 86vh; overflow: auto; background: linear-gradient(180deg, #2e2116, var(--panel)); border: 1px solid var(--gold); border-radius: 18px; padding: 16px 18px 20px; box-shadow: 0 -10px 40px rgba(0, 0, 0, .6); animation: rise .25s cubic-bezier(.3, 1.3, .5, 1); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.modal-head h2 { margin: 0; color: var(--gold); font-size: 19px; }
+.modal-card > p.muted { margin: 2px 0 6px; }
+.modal-card h3 { font-family: Cinzel; font-size: 13px; color: var(--gold); text-transform: uppercase; margin: 14px 0 4px; }
+.modal-card p { margin: 0; line-height: 1.45; }
+.modal-card ul { margin: 0; padding-left: 20px; } .modal-card li { margin: 3px 0; line-height: 1.4; }
+.scene { font-style: italic; border-left: 3px solid var(--fire); padding-left: 10px; color: #e8d9c0; }

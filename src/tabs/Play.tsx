@@ -3,6 +3,7 @@ import { gmDie, lvl, mod, PB, parseDice, resList, runeDC, setUsed, sg, used } fr
 import { d, d20, rollN, show, sum } from '../lib/dice';
 import { getSheet, update, useSheet } from '../lib/store';
 import type { Sheet } from '../data/default';
+import { powerInfo } from '../data/powers';
 
 const heal = (x: Sheet, n: number) => {
   x.state.hp = Math.min(+x.combat.hpMax, x.state.hp + n);
@@ -68,6 +69,7 @@ export function Play() {
   const s = D.state;
   const max = +D.combat.hpMax || 1;
   const [val, setVal] = useState('');
+  const [info, setInfo] = useState<string | null>(null);
   const n = +val;
 
   const deathRoll = () => {
@@ -143,7 +145,7 @@ export function Play() {
           return (
             <div className={'power' + (active ? ' active' : '') + (left <= 0 && !active ? ' spent' : '')} key={r.id}>
               <div className="power-info">
-                <b>{r.name}</b>
+                <b>{r.name} <button className="info-btn" aria-label={'O que faz: ' + r.name} onClick={() => setInfo(r.id)}>i</button></b>
                 <span className="pips">
                   {Array.from({ length: r.max }, (_, i) => (
                     <button key={i} className={'pip' + (i < u ? ' used' : '')} aria-label="marcar uso"
@@ -171,6 +173,40 @@ export function Play() {
           }}>🛏️ Descanso longo</button>
         </div>
       </div>
+
+      {info && <PowerModal id={info} onClose={() => setInfo(null)} />}
     </section>
+  );
+}
+
+function PowerModal({ id, onClose }: { id: string; onClose: () => void }) {
+  const D = useSheet();
+  const r = resList(D).find((x) => x.id === id);
+  if (!r) return null;
+  const p = powerInfo(id, D);
+  const reset = r.reset === 'short' ? 'descanso curto' : r.reset === 'long' ? 'descanso longo' : 'metade volta no descanso longo';
+  return (
+    <div className="modal" onClick={onClose}>
+      <div className="modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-label={r.name}>
+        <div className="modal-head">
+          <h2 className="cz">{r.name}</h2>
+          <button className="mini" onClick={onClose} aria-label="Fechar">✕</button>
+        </div>
+        <p className="muted small">{r.max - used(D, r.id)}/{r.max} usos · {reset}</p>
+        {p ? (
+          <>
+            <h3>O que faz</h3>
+            <p>{p.what}</p>
+            <h3>Dados técnicos</h3>
+            <ul>{p.tech.map((t) => <li key={t}>{t}</li>)}</ul>
+            {p.tip && <><h3>Dica</h3><p>{p.tip}</p></>}
+            <h3>Na cena</h3>
+            <p className="scene">{p.scene}</p>
+          </>
+        ) : (
+          <p>{r.desc || 'Sem descrição. Dá para escrever uma em ✏️ Editar → Recursos.'}</p>
+        )}
+      </div>
+    </div>
   );
 }
