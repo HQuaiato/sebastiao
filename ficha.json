@@ -1,5 +1,5 @@
 {
- "v": 2,
+ "v": 3,
  "updatedAt": 0,
  "info": {
   "name": "Sebastião \"Ugrak\" Bariga",
@@ -157,5 +157,18 @@
   ],
   "mode": 0,
   "hdUsed": 0
+ },
+ "pet": {
+  "hunger": 25,
+  "joy": 80,
+  "ts": 0,
+  "snacks": 0
+ },
+ "game": {
+  "target": null,
+  "revealed": [],
+  "hint": false,
+  "tries": 0,
+  "solved": false
  }
 }

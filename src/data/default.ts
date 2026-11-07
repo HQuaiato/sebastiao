@@ -1,0 +1,206 @@
+// Ficha original do Sebastião. O app usa isso quando não acha nada salvo.
+export type Ab = 'FOR' | 'DES' | 'CON' | 'INT' | 'SAB' | 'CAR';
+export interface Weapon { name: string; ab: Ab; dice: string; type: string; bonus: number; note: string }
+export interface Resource { id: string; name: string; desc: string; max: number; reset: 'short' | 'long' }
+export interface Brew { name: string; ing: string; obs: string; rating: number; goal: boolean; ts: number }
+export interface Sheet {
+  v: number;
+  updatedAt: number;
+  info: { name: string; player: string; race: string; cls: string; sub: string; level: number; background: string; alignment: string; age: string; height: string; weight: string; eyes: string; skin: string; hair: string };
+  scores: Record<Ab, number>;
+  saves: Ab[];
+  skills: Record<string, number>;
+  combat: { ac: number; hpMax: number; speed: string; initBonus: number; hitDie: number; runeAb: Ab; savage: boolean; toolDouble: boolean; cloudAdv: boolean; stealthDis: boolean };
+  weapons: Weapon[];
+  resources: Resource[];
+  toolsText: string;
+  features: string;
+  profs: string;
+  pers: { traits: string; ideals: string; bonds: string; flaws: string };
+  appearance: string;
+  lore: string;
+  allies: string;
+  equipment: string;
+  treasure: string;
+  notes: string;
+  coins: { cp: number; sp: number; ep: number; gp: number; pp: number };
+  brews: Brew[];
+  pet: { hunger: number; joy: number; ts: number; snacks: number };
+  game: { target: number[] | null; revealed: number[]; hint: boolean; tries: number; solved: boolean };
+  state: { hp: number; temp: number; used: Record<string, number>; giant: boolean; ds: number[]; mode: number; hdUsed: number };
+}
+
+export const DEFAULT: Sheet = {
+  "v": 3,
+  "updatedAt": 0,
+  "info": {
+    "name": "Sebastião \"Ugrak\" Bariga",
+    "player": "HQuaiato",
+    "race": "Meio-orc",
+    "cls": "Guerreiro",
+    "sub": "Cavaleiro Rúnico",
+    "level": 4,
+    "background": "Cervejeiro de Porão",
+    "alignment": "Neutro e Bom",
+    "age": "32",
+    "height": "1,95 m",
+    "weight": "150 kg",
+    "eyes": "castanhos",
+    "skin": "verde-acinzentada",
+    "hair": "castanho-escuro, barba trançada com anel de ferro"
+  },
+  "scores": {
+    "FOR": 18,
+    "DES": 10,
+    "CON": 16,
+    "INT": 8,
+    "SAB": 12,
+    "CAR": 12
+  },
+  "saves": [
+    "FOR",
+    "CON"
+  ],
+  "skills": {
+    "Atletismo": 1,
+    "Intimidação": 1,
+    "Intuição": 1,
+    "Lidar com Animais": 1,
+    "Percepção": 1
+  },
+  "combat": {
+    "ac": 19,
+    "hpMax": 40,
+    "speed": "9 m",
+    "initBonus": 0,
+    "hitDie": 10,
+    "runeAb": "CON",
+    "savage": true,
+    "toolDouble": true,
+    "cloudAdv": true,
+    "stealthDis": true
+  },
+  "weapons": [
+    {
+      "name": "Martelo de Guerra",
+      "ab": "FOR",
+      "dice": "1d8",
+      "type": "contundente",
+      "bonus": 0,
+      "note": "corpo a corpo · versátil 1d10 com as duas mãos"
+    },
+    {
+      "name": "Machadinha",
+      "ab": "FOR",
+      "dice": "1d6",
+      "type": "cortante",
+      "bonus": 0,
+      "note": "leve · arremesso 6/18 m · tem 2"
+    }
+  ],
+  "resources": [
+    {
+      "id": "sw",
+      "name": "Retomar o Fôlego",
+      "desc": "ação bônus · 1d10 + nível em PV",
+      "max": 1,
+      "reset": "short"
+    },
+    {
+      "id": "as",
+      "name": "Surto de Ação",
+      "desc": "uma ação extra no turno",
+      "max": 1,
+      "reset": "short"
+    },
+    {
+      "id": "gm",
+      "name": "Poder do Gigante",
+      "desc": "ação bônus · 1 minuto",
+      "max": 2,
+      "reset": "long"
+    },
+    {
+      "id": "fr",
+      "name": "Runa de Fogo",
+      "desc": "ao acertar com arma",
+      "max": 1,
+      "reset": "short"
+    },
+    {
+      "id": "cr",
+      "name": "Runa de Nuvem",
+      "desc": "reação",
+      "max": 1,
+      "reset": "short"
+    },
+    {
+      "id": "re",
+      "name": "Resistência Implacável",
+      "desc": "cair a 1 PV em vez de 0",
+      "max": 1,
+      "reset": "long"
+    }
+  ],
+  "toolsText": "Suprimentos de cervejeiro\nFerramentas de tanoeiro (ferreiro)\nKit de jogos (dados)",
+  "features": "## Meio-orc\nVisão no Escuro: enxerga no escuro até 18 m, em tons de cinza.\nAmeaçador: proficiência em Intimidação.\nResistência Implacável: uma vez por descanso longo, quando cairia a 0 PV sem morrer na hora, fica com 1 PV.\nAtaques Selvagens: num crítico corpo a corpo, rola um dado de dano da arma a mais. O app já soma.\n\n## Guerreiro\nEstilo de Luta, Defesa: +1 de CA usando armadura (já somado na CA).\nRetomar o Fôlego: ação bônus, recupera 1d10 + nível de guerreiro em PV. Uma vez por descanso curto.\nSurto de Ação: uma ação extra no seu turno. Uma vez por descanso curto.\nAumento de Atributo (nível 4): +2 em atributos.\n\n## Cavaleiro Rúnico\nEntalhador de Runas: conhece 2 runas, gravadas na tampa do barril da mãe. Cada uma pode ser invocada uma vez por descanso curto. CD = 8 + proficiência + CON.\nRuna de Fogo: o passivo dobra a proficiência com ferramentas. Ao acertar com arma, +2d6 de fogo; o alvo faz salvaguarda de FOR ou fica impedido por 1 minuto, tomando 2d6 de fogo no início de cada turno dele e repetindo a salvaguarda no fim.\nRuna de Nuvem: o passivo dá vantagem em Prestidigitação e Enganação. Com a reação, quando uma criatura que ele vê a até 9 m é atingida, o ataque passa para outra criatura a até 9 m dele (não o atacante), com a mesma rolagem.\nPoder do Gigante: ação bônus, por 1 minuto. Fica Grande, ganha vantagem em testes e salvaguardas de FOR e +1d6 de dano uma vez por turno com arma. Usos = bônus de proficiência por descanso longo.",
+  "profs": "Armaduras: todas e escudos.\nArmas: simples e marciais.\nFerramentas: suprimentos de cervejeiro, kit de jogos (dados), ferramentas de tanoeiro (ferreiro, pelo Cavaleiro Rúnico).\nIdiomas: Comum, Humana.",
+  "pers": {
+    "traits": "Fala pouco, mas cheira cada caneca antes de beber. Pede desculpas para quem acabou de derrubar.",
+    "ideals": "\"Ninguém deveria ficar sozinho nas cinzas.\"",
+    "bonds": "Torresmin, e a cerveja de bergamota da mãe.",
+    "flaws": "Obedece a quem o criou mais do que deveria. Desmonta diante de qualquer pedido de misericórdia, mesmo quando é armadilha."
+  },
+  "appearance": "Meio-orc enorme e barrigudo, com o barrigão duro de músculo por baixo. Pele verde-acinzentada, presas pequenas, nariz quebrado e cicatrizes nos braços e no rosto. Cabelo e barba castanho-escuros, a barba trançada com um anel de ferro. Os olhos são gentis e não combinam com o resto.\nUsa cota de malha remendada por baixo de um avental de cervejeiro manchado, martelo de guerra na cintura, barrilzinho nas costas e a tampa do barril da mãe como escudo. Runas tatuadas nos braços: laranja (fogo) e azul (nuvem).\nTorresmin vai sempre no ombro ou embaixo do braço.",
+  "lore": "## Quem é\nNinguém no Lugarejo Desimportante sabe que existe um meio-orc morando nos fundos da Taverna do Gato e Veado. Quem sabe finge que não sabe. Ugrak era o nome que a mãe usava; ele mal lembra disso, então todo mundo chama de Sebastião.\n\n## A mãe e as runas\nA mãe era humana, de uma família de tanoeiros do interior. A família guardava um segredo pequeno: sabia entalhar nas tampas dos barris runas antigas, de um tempo em que gigantes andavam por aquelas terras. Ninguém as lia como língua. Eram \"marcas da casa\", passadas de mãe para filha, que mantinham a cerveja boa, o fogo da brassagem firme e o barril inteiro. Do pai, ele só sabe que era orc.\nA aldeia foi destruída na Guerra de Quincas. Oficialmente, foi só mais uma vila no caminho, mas pode ser que alguém tenha ido até lá atrás das runas.\nDele mesmo, sobrou quase nada. Nem rosto, nem nome da mãe, nem da aldeia. Só um gosto: uma cerveja clara, amarga e cítrica, de bergamota, selada com uma das runas, que ela deixava ele provar na ponta do dedo. E a tampa do barril dela, toda entalhada, que hoje é o escudo dele.\n\n## Os fundos da taverna\nQuem o achou foi o casal dono da taverna, Seu Lauro e Dona Cida. Uma criança meio-orc numa região humana é problema, então o criaram escondido no depósito, entre sacos de cevada e barris. Do jeito torto deles, o amavam. Mas a lição era sempre a mesma: \"o mundo não vai ter pena de ti, então tu tens que ser forte\".\nE ele ficou forte. Nas noites de aposta, o porão virava rinha, e o \"monstro do Gato e Veado\" lutava contra quem pagasse para tentar. Quase nunca perdia, e o dinheiro ajudava a manter a taverna de pé. Ele não gostava de brigar, mas gostava de ser útil.\n\n## A noite do Torresmin\nNuma noite, trouxeram um leitãozinho malhado para ser o assado da vitória. O Sebastião tinha acabado de derrubar três homens e se recusou a entregar o bicho. Foi a primeira vez que disse não ao casal.\nQuando um apostador irritado partiu para cima do porquinho, a tampa do barril da mãe brilhou. As runas acenderam no escudo e nos braços dele, e ele cresceu. Ninguém falou mais daquilo. O leitão virou o Torresmin, e as lutas pararam.\nEle não sabe ler as runas, mas o corpo \"lembra\". Quando precisa proteger alguém, elas acendem, como se a tampa protegesse quem está dentro, do mesmo jeito que protegia a cerveja.\n\n## Hoje\nEle vive fazendo cerveja nos fundos da taverna, obcecado em achar a \"berga\" perfeita. A bergamota boa só cresce do outro lado da fronteira, no reino rival, e com a tensão entre os dois reinos quase sumiu do comércio. E ele desconfia que falta mais do que a receita: falta a runa certa. A busca pela cerveja, no fundo, é a busca pela mãe.\nGrande, assustador e cheio de cicatrizes, ele desmonta diante de uma criança chorando, de um bicho machucado ou de alguém pedindo misericórdia. Nessas horas, quem aparece é o menino que provava cerveja na ponta do dedo da mãe.",
+  "allies": "Seu Lauro e Dona Cida: donos da Taverna do Gato e Veado, que o criaram.\nTorresmin: porquinho malhado de cachecol vermelho, salvo do espeto.",
+  "equipment": "Cota de malha, escudo (tampa do barril da mãe), martelo de guerra, 2 machadinhas, pacote de aventureiro, suprimentos de cervejeiro, um barril pequeno.",
+  "treasure": "Tampa do barril da mãe, escudo com runas.",
+  "notes": "",
+  "coins": {
+    "cp": 0,
+    "sp": 0,
+    "ep": 0,
+    "gp": 0,
+    "pp": 0
+  },
+  "brews": [
+    {
+      "name": "A berga da mãe",
+      "ing": "Clara, amarga, cítrica. Bergamota e uma runa na tampa.",
+      "obs": "A lembrança. É isso que ele quer reencontrar.",
+      "rating": 5,
+      "goal": true,
+      "ts": 0
+    }
+  ],
+  "state": {
+    "hp": 40,
+    "temp": 0,
+    "used": {},
+    "giant": false,
+    "ds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mode": 0,
+    "hdUsed": 0
+  },
+  "pet": {
+    "hunger": 25,
+    "joy": 80,
+    "ts": 0,
+    "snacks": 0
+  },
+  "game": {
+    "target": null,
+    "revealed": [],
+    "hint": false,
+    "tries": 0,
+    "solved": false
+  }
+};
