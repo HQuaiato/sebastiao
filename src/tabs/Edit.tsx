@@ -3,7 +3,6 @@ import { Card, Field } from '../components/ui';
 import { ABN, ABS, mod, PB, sg, SKILLS } from '../lib/calc';
 import { show } from '../lib/dice';
 import { cloudGet, cloudSave, fromAny, getToken, replace, resetSheet, setRole, setToken, update, useSheet } from '../lib/store';
-import { hashPass } from '../components/Login';
 import type { Ab } from '../data/default';
 
 const AB_OPTS = ABS.map((a) => [a, a] as [string, string]);
@@ -173,13 +172,6 @@ export function Edit() {
         <p>Link para visitantes (mestre e grupo): <code>{location.origin + location.pathname}?visitante</code></p>
         <div className="btns">
           <button onClick={() => navigator.clipboard?.writeText(location.origin + location.pathname + '?visitante').then(() => show('Link copiado', '👀', 'mande pro grupo'))}>📋 Copiar link de visitante</button>
-          <button onClick={async () => {
-            const p = prompt('Nova senha do jogador (mínimo 4 caracteres):');
-            if (!p || p.trim().length < 4) return;
-            const h = await hashPass(p);
-            update((x) => { x.auth = { hash: h }; });
-            show('Senha', 'Trocada', getToken() ? 'vale em todos os aparelhos' : 'vale neste aparelho; com o token, vale em todos', 'good');
-          }}>🔑 Trocar senha</button>
           <button onClick={() => setRole(null)}>🚪 Sair</button>
         </div>
         <p className="help">O visitante vê vida, CA, atributos, perícias, ataques e usos dos poderes, ao vivo. Não vê habilidades, história, personalidade, itens nem anotações. Para ele ver os números atualizados, o token precisa estar configurado.</p>

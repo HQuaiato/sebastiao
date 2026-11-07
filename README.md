@@ -18,7 +18,7 @@ Ficha interativa feita em React + TypeScript + Vite, publicada no GitHub Pages p
 
 ## Jogador e visitante
 
-- **Jogador:** entra com senha (criada no primeiro acesso) e vê e edita tudo.
+- **Jogador:** entra com a senha do jogador e vê e edita tudo.
 - **Visitante:** link [`?visitante`](https://hquaiato.github.io/sebastiao/?visitante). Vê vida, CA, atributos, perícias, ataques e usos dos poderes, atualizados a cada 15 s. Não vê habilidades, história, personalidade, itens nem anotações, e não edita nada.
 
 ## Salvar em qualquer aparelho
