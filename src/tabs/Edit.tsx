@@ -35,7 +35,8 @@ export function Edit() {
 
   return (
     <section className="ed">
-      <Card title="☁️ Salvar na nuvem (GitHub)">
+      <p className="muted" style={{ margin: '0 0 10px' }}>Toque num bloco para abrir. Tudo salva na hora.</p>
+      <Card fold open={!getToken()} title="☁️ Salvar na nuvem (GitHub)">
         <p>A ficha é salva neste aparelho sozinha. Para ela ser <b>a mesma em qualquer lugar</b>, cole um token do GitHub. Toda mudança passa a ser gravada no <code>ficha.json</code> do repositório <b>HQuaiato/sebastiao</b>.</p>
         <div className="field"><label>Token do GitHub (fica só neste navegador)</label>
           <form className="exprrow" onSubmit={(e) => { e.preventDefault(); setToken(tok); }}>
@@ -53,7 +54,7 @@ export function Edit() {
         </div>
       </Card>
 
-      <Card title="Identidade">
+      <Card fold open title="Identidade">
         <Field path="info.name" label="Nome" />
         <div className="two">
           <Field path="info.player" label="Jogador" />
@@ -73,7 +74,7 @@ export function Edit() {
         <p className="help">O bônus de proficiência sai do nível sozinho (agora {sg(PB(D))}).</p>
       </Card>
 
-      <Card title="Atributos" right="valor, não modificador">
+      <Card fold title="Atributos" right="valor, não modificador">
         <div className="six">
           {ABS.map((a) => (
             <div className="field" key={a}>
@@ -92,7 +93,7 @@ export function Edit() {
         </div>
       </Card>
 
-      <Card title="Combate">
+      <Card fold title="Combate">
         <div className="three">
           <Field path="combat.ac" label="CA" kind="number" />
           <Field path="combat.hpMax" label="PV máximo" kind="number" />
@@ -107,7 +108,7 @@ export function Edit() {
         <Field path="combat.stealthDis" kind="check" label="Armadura dá desvantagem em Furtividade" />
       </Card>
 
-      <Card title="Armas" right={<button className="mini" onClick={() => update((x) => { x.weapons.push({ name: 'Nova arma', ab: 'FOR', dice: '1d6', type: '', bonus: 0, note: '' }); })}>+ arma</button>}>
+      <Card fold title="Armas" right={<button className="mini" onClick={() => update((x) => { x.weapons.push({ name: 'Nova arma', ab: 'FOR', dice: '1d6', type: '', bonus: 0, note: '' }); })}>+ arma</button>}>
         {D.weapons.map((_, i) => (
           <div className="item" key={i}>
             <div className="two">
@@ -125,7 +126,7 @@ export function Edit() {
         ))}
       </Card>
 
-      <Card title="Recursos" right={<button className="mini" onClick={() => update((x) => { x.resources.push({ id: 'r' + Date.now(), name: 'Novo recurso', desc: '', max: 1, reset: 'long' }); })}>+ recurso</button>}>
+      <Card fold title="Recursos" right={<button className="mini" onClick={() => update((x) => { x.resources.push({ id: 'r' + Date.now(), name: 'Novo recurso', desc: '', max: 1, reset: 'long' }); })}>+ recurso</button>}>
         {D.resources.map((_, i) => (
           <div className="item" key={D.resources[i].id}>
             <div className="two">
@@ -142,7 +143,7 @@ export function Edit() {
         <p className="help">"Curto" volta no descanso curto e no longo. "Longo" volta só no longo.</p>
       </Card>
 
-      <Card title="Perícias">
+      <Card fold title="Perícias">
         {SKILLS.map(([n, ab]) => (
           <div className="skillrow" key={n}>
             <span>{n} <span className="tag">{ab as Ab}</span></span>
@@ -153,7 +154,7 @@ export function Edit() {
         ))}
       </Card>
 
-      <Card title="Textos">
+      <Card fold title="Textos">
         <p className="help">Formatação: <code>## Título</code> vira título, <code>Nome: texto</code> deixa o nome em destaque e <code>- item</code> vira lista.</p>
         <Field path="toolsText" label="Ferramentas (uma por linha)" kind="area" rows={3} />
         <Field path="features" label="Habilidades e características" kind="area" rows={14} />
@@ -167,7 +168,7 @@ export function Edit() {
         <Field path="allies" label="Aliados e organizações" kind="area" rows={3} />
       </Card>
 
-      <Card title="Zona de perigo">
+      <Card fold title="Zona de perigo">
         <button className="del" onClick={() => confirm('Apagar tudo e voltar à ficha original?') && resetSheet()}>Voltar a ficha ao original</button>
         <p className="help">Apaga as mudanças e volta para a ficha que veio no app.</p>
       </Card>

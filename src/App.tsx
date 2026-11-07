@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Header, TABS, type Tab } from './components/Header';
 import { RollOverlay } from './components/RollOverlay';
-import { Berga } from './tabs/Berga';
-import { Combat } from './tabs/Combat';
+import { Checks } from './tabs/Checks';
 import { Edit } from './tabs/Edit';
-import { Tests } from './tabs/Tests';
-import { Bag, Powers, Story } from './tabs/Text';
-import { Torresmin } from './tabs/Torresmin';
+import { Bag, Info } from './tabs/Info';
+import { Play } from './tabs/Play';
 import { useSheet } from './lib/store';
 
-const LS_TAB = 'sebastiao-tab';
+const LS_TAB = 'sebastiao-tab2';
 const firstTab = (): Tab => {
   try {
     const t = localStorage.getItem(LS_TAB) as Tab | null;
     if (t && TABS.some(([id]) => id === t)) return t;
   } catch { /* ignore */ }
-  return 'combate';
+  return 'jogo';
 };
 
 export default function App() {
@@ -28,13 +26,10 @@ export default function App() {
     <div className={'app' + (D.state.giant ? ' is-giant' : '') + (D.state.hp <= 0 ? ' is-down' : '')}>
       <Header tab={tab} setTab={setTab} />
       <main className="wrap">
-        {tab === 'combate' && <Combat />}
-        {tab === 'testes' && <Tests />}
-        {tab === 'poderes' && <Powers />}
-        {tab === 'torresmin' && <Torresmin />}
-        {tab === 'berga' && <Berga />}
+        {tab === 'jogo' && <Play />}
+        {tab === 'testes' && <Checks />}
         {tab === 'mochila' && <Bag />}
-        {tab === 'historia' && <Story />}
+        {tab === 'ficha' && <Info />}
         {tab === 'editar' && <Edit />}
       </main>
       <RollOverlay />

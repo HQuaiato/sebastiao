@@ -10,12 +10,11 @@ Ficha interativa feita em React + TypeScript + Vite, publicada no GitHub Pages p
 
 ## O que tem
 
-- **⚔️ Combate:** PV com dano/cura/temporário, testes contra a morte, ataques com dano automático (Gigante e Ataques Selvagens), runas, recursos e descansos
-- **🎲 Testes:** atributos, salvaguardas, perícias e ferramentas com vantagem/desvantagem automática, dados livres e histórico
-- **🐷 Torresmin:** o porquinho, com fome e alegria que mudam com o tempo real
-- **🍺 A Berga:** minijogo para recriar a cerveja de bergamota da mãe, mais o diário de brassagem
-- **🎒 Mochila**, **📜 Poderes**, **📖 História**
-- **✏️ Editar:** muda qualquer número ou texto da ficha; o resto se recalcula sozinho
+- **⚔️ Jogo:** vida com −/+ e campo de dano/cura, CA, iniciativa, ataques que rolam acerto e dano num toque, e poderes com botão "Usar" e bolinhas de uso
+- **🎲 Testes:** atributos, salvaguardas, perícias, ferramentas e dados
+- **🎒 Itens:** moedas, equipamento e anotações
+- **📖 Ficha:** habilidades, personalidade e história
+- **✏️ Editar:** muda qualquer número ou texto; o resto se recalcula sozinho
 
 ## Salvar em qualquer aparelho
 
@@ -31,6 +30,6 @@ npm run dev
 ```
 src/data/      ficha padrão
 src/lib/       cálculos, dados, save/sincronização
-src/components cabeçalho, d20 animado, Torresmin
+src/components cabeçalho e rolagem
 src/tabs/      telas
 ```

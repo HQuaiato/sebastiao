@@ -2,7 +2,15 @@ import type { ReactNode } from 'react';
 import { getP, rich, setP } from '../lib/calc';
 import { update, useSheet } from '../lib/store';
 
-export function Card({ title, right, children, className = '' }: { title?: ReactNode; right?: ReactNode; children: ReactNode; className?: string }) {
+export function Card({ title, right, children, className = '', fold, open }: { title?: ReactNode; right?: ReactNode; children: ReactNode; className?: string; fold?: boolean; open?: boolean }) {
+  if (fold) {
+    return (
+      <details className={'card sec ' + className} open={open}>
+        <summary>{title}{right && <small onClick={(e) => e.preventDefault()}>{right}</small>}</summary>
+        <div className="sec-body">{children}</div>
+      </details>
+    );
+  }
   return (
     <div className={'card ' + className}>
       {title && <h2>{title}{right && <small>{right}</small>}</h2>}

@@ -24,8 +24,8 @@ export function RollOverlay() {
     if (!r) return;
     setPhase('spin');
     const iv = setInterval(() => setFlicker(1 + Math.floor(Math.random() * 20)), 60);
-    const t1 = setTimeout(() => { clearInterval(iv); setPhase('show'); }, r.d20 ? 650 : 380);
-    const t2 = setTimeout(dismiss, 5200);
+    const t1 = setTimeout(() => { clearInterval(iv); setPhase('show'); }, r.d20 ? 420 : 200);
+    const t2 = setTimeout(dismiss, 4200);
     return () => { clearInterval(iv); clearTimeout(t1); clearTimeout(t2); };
   }, [r]);
 
@@ -37,6 +37,7 @@ export function RollOverlay() {
       <div className="roll-body">
         <div className="roll-l">{r.label}</div>
         <div className="roll-r">{spinning ? '…' : r.total}</div>
+        {!spinning && r.extra && <div className="roll-x">{r.extra}</div>}
         <div className="roll-d">{spinning ? 'rolando' : r.detail}</div>
       </div>
       {!spinning && (r.kind === 'crit' || r.kind === 'giant') && (
