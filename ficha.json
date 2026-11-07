@@ -1,6 +1,6 @@
 {
  "v": 3,
- "updatedAt": 0,
+ "updatedAt": 1794020651066,
  "info": {
   "name": "Sebastião \"Ugrak\" Bariga",
   "player": "HQuaiato",
@@ -18,12 +18,12 @@
   "hair": "castanho-escuro, barba trançada com anel de ferro"
  },
  "scores": {
-  "FOR": 18,
+  "FOR": 15,
   "DES": 10,
-  "CON": 16,
+  "CON": 12,
   "INT": 8,
-  "SAB": 12,
-  "CAR": 12
+  "SAB": 10,
+  "CAR": 10
  },
  "saves": [
   "FOR",
@@ -38,7 +38,7 @@
  },
  "combat": {
   "ac": 19,
-  "hpMax": 40,
+  "hpMax": 23,
   "speed": "9 m",
   "initBonus": 0,
   "hitDie": 10,
@@ -142,8 +142,11 @@
    "ts": 0
   }
  ],
+ "auth": {
+  "hash": ""
+ },
  "state": {
-  "hp": 40,
+  "hp": 23,
   "temp": 0,
   "used": {},
   "giant": false,
