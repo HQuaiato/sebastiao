@@ -1,6 +1,6 @@
 {
  "v": 3,
- "updatedAt": 1794020651066,
+ "updatedAt": 1794021378831,
  "info": {
   "name": "Sebastião \"Ugrak\" Bariga",
   "player": "HQuaiato",
@@ -146,9 +146,16 @@
   "hash": ""
  },
  "state": {
-  "hp": 23,
+  "hp": 15,
   "temp": 0,
-  "used": {},
+  "used": {
+   "sw": 0,
+   "as": 0,
+   "gm": 0,
+   "fr": 0,
+   "cr": 0,
+   "re": 0
+  },
   "giant": false,
   "ds": [
    0,
